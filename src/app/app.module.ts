@@ -18,6 +18,8 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { LoginComponent } from './login/login.component';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth-guard.service';
 
 
 @NgModule({
@@ -44,17 +46,20 @@ import { LoginComponent } from './login/login.component';
       {path:'' , component:HomeComponent},
       {path:'products' , component:ProductsComponent},
       {path:'shoping-cart' , component:ShopingCartComponent},
-      {path:'check-out' , component:CheckOutComponent},
-      {path:'order-success' , component:OrderSuccessComponent},
+      {path:'check-out' , component:CheckOutComponent , canActivate:[AuthGuard]},
+      {path:'order-success' , component:OrderSuccessComponent, canActivate:[AuthGuard] },
       {path:'login' , component:LoginComponent},
-      {path:'admin/admin-products' , component:AdminProductsComponent},
-      {path:'admin/admin-orders' , component:AdminOrdersComponent},
-      {path:'my/my-orders' , component:MyOrdersComponent},
+      {path:'admin/admin-products' , component:AdminProductsComponent , canActivate:[AuthGuard]},
+      {path:'admin/admin-orders' , component:AdminOrdersComponent , canActivate:[AuthGuard]},
+      {path:'my/my-orders' , component:MyOrdersComponent, canActivate:[AuthGuard]},
       {path:'**' , component:HomeComponent}
 
     ])
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

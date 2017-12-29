@@ -9,16 +9,23 @@
         <ul class="navbar-nav mr-auto">
          
           <li class="nav-item">
-            <a class="nav-link" routerLink="/shoping-cart">Shoping cart</a>
+            <a class="nav-link" routerLinkActive="active current" routerLink="/shoping-cart">Shoping cart</a>
           </li>
+          <ng-template #anonymoususer>
+          <li  class="nav-item">
+            <a class="nav-link" routerLinkActive="active current" routerLink="/login">Login</a>
+          </li>
+        </ng-template>
   
-          <li ngbDropdown class="nav-item dropdown">
-            <a ngbDropdownToggle class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">UserName</a>
+          <li *ngIf="Auth.user$ | async as user ; else anonymoususer " ngbDropdown class="nav-item dropdown">
+            <a ngbDropdownToggle class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{user.displayName}}
+            </a>
             <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" routerLink="/my/my-orders">My Orders</a>
-              <a class="dropdown-item" routerLink="/admin/admin-orders">Manage Orders</a>
-              <a class="dropdown-item" routerLink="/admin/admin-products">Manage Products</a>
-              <a class="dropdown-item" >Logout</a>
+              <a class="dropdown-item" routerLinkActive="active current" routerLink="/my/my-orders">My Orders</a>
+              <a class="dropdown-item" routerLinkActive="active current"  routerLink="/admin/admin-orders">Manage Orders</a>
+              <a class="dropdown-item" routerLinkActive="active current" routerLink="/admin/admin-products">Manage Products</a>
+              <a class="dropdown-item" (click)="LogOut()" >Logout</a>
             </div>
           </li>
         </ul>
